@@ -8,6 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 base_url = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
 username = "Admin"
 password = "admin123"
+invalid_psw = "21"
 
 @pytest.fixture(scope="class",autouse=True)
 def browser_setup(request):
