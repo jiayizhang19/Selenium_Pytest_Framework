@@ -3,7 +3,7 @@ import pytest
 import allure
 from configuration import *
 from WebPages.LoginPage import Login_Page
-from projects.PythonPractice.SeleniumBasics.SeleniumBasicPractice import driver
+
 
 '''
 Allure setup
