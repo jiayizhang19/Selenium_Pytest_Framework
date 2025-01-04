@@ -11,7 +11,8 @@ Allure setup
 2. Add allure bin path to system variables Path
 3. Ensure jdk's path in java_home is correctedly setup, as allure will need jdk
 4. pip install allure-pytest
-5. run command: pytest --alluredir=Reports
+5. run command: pytest --alluredir=allure-results
+6. View report command: allure serve allure-results
 '''
 
 @pytest.mark.usefixtures("browser_setup")
@@ -27,10 +28,13 @@ class Test_Valid_Login:
         self.driver.get(base_url)
         Login_Page(self.driver).login(username, password)
         assert "dashboard" in self.driver.current_url
+        allure.attach(self.driver.get_screenshot_as_png(), name="Valid credentials",
+                              attachment_type=allure.attachment_type.PNG)
 
 
     # def teardown_class(self):
     #     self.driver.quit()
+
 @pytest.mark.usefixtures("browser_setup")
 class Test_Invalid_Login:
 
