@@ -4,14 +4,40 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-# driver = None
+
 base_url = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
 username = "Admin"
 password = "admin123"
 invalid_psw = "21"
 
+
+'''
+Fixture scope:
+1. function: run once for each test function
+    --> use @pytest.fixture(autouse=True) to run the fixture automatically without calling it in the test function
+2. class: run once for each class of tests
+    --> use @pytest.fixture(scope="class",autouse=True) to run the fixture automatically without calling it in the test class
+3. module: run once for each module. for example, one module may have multiple test classes and test functions
+4. package: run once for each package including a __init__.py file
+5. session: run once for the entire session, which means all the test cases for the entire pytest execution
+
+Yield:
+1. yield is used within a fixture to define setup and teardown behavior
+2. yield is used to pause execution of the test
+3. yield can also be used to return a value to the test function
+'''
+
 @pytest.fixture(scope="class",autouse=True)
 def browser_setup(request):
+    """
+    Class Scope: 
+    To ensure the driver is available and accessible to all methods in the class, 
+    If using driver = webdriver.Chrome(), it won't be accessible inside the function in test_xxx, as driver is only a local variablle inside brwoser_setup function
+    
+    Function scope:
+    No need to use request.cls.driver = , use driver = directly
+    In test_xxx file, need to pass browser explicitly to the function, e.g. test_xxx(browser_setup)
+    """
     request.cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     yield
     request.cls.driver.quit()
