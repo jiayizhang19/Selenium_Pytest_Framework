@@ -2,7 +2,7 @@ import subprocess
 import os
 
 # Important! Set the project root directory so that the below command could be run successfully wherever you execute it!
-project_root = os.path.abspath(os.path.dirname(__file__))
+project_root = os.path.dirname(os.path.abspath(__file__))
 
 
 def run_test():
