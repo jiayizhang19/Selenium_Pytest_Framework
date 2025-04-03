@@ -30,7 +30,7 @@ Fixture scope:
     --> use @pytest.fixture(scope="session",autouse=True) to run the fixture automatically without calling it in the test class
     --> if not setting autouse=True in configuration file, then need to pass the name of this fixture before the test case function to call it like the below
     @pytest.mark.usefixtures("name_of_fixture")
-    def test_case_1(name_of_fixture):
+    def test_case_1():
         ...
 
 Yield:
