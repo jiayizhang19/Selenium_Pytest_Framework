@@ -1,4 +1,4 @@
-from configuration import *
+from TestCases.configuration import *
 from Utils.Actions import Actions
 from selenium.webdriver.common.by import By
 

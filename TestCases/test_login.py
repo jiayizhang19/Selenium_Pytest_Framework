@@ -1,7 +1,7 @@
 
 import pytest
 import allure
-from configuration import *
+from TestCases.configuration import *
 from WebPages.LoginPage import Login_Page
 
 

@@ -12,6 +12,8 @@ invalid_psw = "21"
 
 
 '''
+If name this file as conftest.py, then pytest will automatically pick this up before execution, and so no need to import this file in test_.py
+
 Fixture scope:
 1. function: run once for each test function
     --> use @pytest.fixture(autouse=True) to run the fixture automatically without calling it in the test function
