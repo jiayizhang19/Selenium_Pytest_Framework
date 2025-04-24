@@ -3,10 +3,10 @@ import time
 import os
 
 """
-You can have conftest.py in different levels within your project. 
-For instance, this file is located within the project root directory, so the setups defined here will be applied to all the test_.py file.
-You can also have test folder level conftest, which will only apply to files under that folder. 
-If exsits the same name within the differernt conftest.py, pytest will use the one closer to the test_.py
+You can have conftest.py in different levels within the project. 
+Execution order of fixtures depends on:
+ - Their scope (session > module > class > function)
+ - Their dependency tree (i.e., what depends on what, def setup_airtest_report(setup_bfd))
 
 The request object is used  to pass contextual information about the current test. 
 It provides details about the test  being executed, for instance test-related metadata and functionality.
@@ -15,8 +15,23 @@ It provides details about the test  being executed, for instance test-related me
  --> request.cls: Points to the test class where the test function is located.
 """
 
+report_dir = r"D:\..."
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_bfd():
+    timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
+    report_dir = os.path.join(report_dir,timestamp)
+    # your function here
+    yield {"report_dir": report_dir}
+
 @pytest.fixture(scope="module",autouse=True)
-def setup_airtest_report(request):
+def setup_airtest_report(request,setup_bfd):
     test_file = request.module.__file__
     test_name = os.path.splitext(os.path.basename(test_file))[0]
-    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    report_dir = setup_bfd["report_dir"]
+    os.makedirs(report_dir,exist_ok=True)
+    log_dir = os.path.join(report_dir,f"{test_name}_log")
+    os.makedirs(log_dir,exist_ok=True)
+    # your function here
+    yield
+    # your function here

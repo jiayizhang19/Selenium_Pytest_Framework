@@ -1,7 +1,7 @@
 
 import pytest
 import allure
-from TestCases.configuration import *
+from TestCases.configuration import * # this line could be deleted if name "configuration.py" as "conftest.py"
 from WebPages.LoginPage import Login_Page
 
 
