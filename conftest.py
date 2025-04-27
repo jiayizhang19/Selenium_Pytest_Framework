@@ -24,8 +24,13 @@ def setup_bfd():
     # your function here
     yield {"report_dir": report_dir}
 
+@pytest.fixture(scope="module", autouse=True)
+def cleanup_env():
+    yield
+    # your function here
+
 @pytest.fixture(scope="module",autouse=True)
-def setup_airtest_report(request,setup_bfd):
+def setup_airtest_report(request,setup_bfd, cleanup_env):
     test_file = request.module.__file__
     test_name = os.path.splitext(os.path.basename(test_file))[0]
     report_dir = setup_bfd["report_dir"]
