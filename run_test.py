@@ -2,6 +2,7 @@ import subprocess
 import os
 import sys
 import argparse
+import json
 
 
 '''
@@ -173,10 +174,19 @@ if __name__ == "__main__":
 
     if pytest_case:
         print(f"pytest run: {pytest_case}")
-        # pytest_run(
-        #     targets=pytest_case
-
-        # )
+        case_info = {
+            "case_paths": pytest_case,
+        }
+        message_info = {
+            'dingding_token': args.dingding_token,
+            'node_name': args.node_name, 
+            'single_send_flag': args.single_send_flag,
+        }
+        os.environ["PYTEST_CASE_INFO"] = json.dumps(case_info)
+        os.environ['MESSAGE_INFO'] = json.dumps(message_info)
+        run_test(
+            targets=pytest_case
+        )
 
         
 
